@@ -26,11 +26,11 @@ def vpn_logout(session: requests.Session):
 
 
 def jw_login(session: requests.Session, username, password):
-    session.get('https://vpn.just.edu.cn/jsxsd/,DanaInfo=jwgl.just.edu.cn,Port=8080+')
-    result = session.post('https://vpn.just.edu.cn/jsxsd/xk/,DanaInfo=jwgl.just.edu.cn,Port=8080+LoginToXk',
+    session.get('https://vpn.just.edu.cn/jsxsd/,DanaInfo=202.195.206.35,Port=8080+')
+    result = session.post('https://vpn.just.edu.cn/jsxsd/xk/,DanaInfo=202.195.206.35,Port=8080+LoginToXk',
                           data={'USERNAME': username, 'PASSWORD': password})
-    if result.url != 'https://vpn.just.edu.cn/jsxsd/framework/,DanaInfo=jwgl.just.edu.cn,Port=8080+xsMain.jsp' and \
-            result.url != 'https://vpn.just.edu.cn/jsxsd/grsz/,DanaInfo=jwgl.just.edu.cn,Port=8080+grsz_xgmm_beg.do':
+    if result.url != 'https://vpn.just.edu.cn/jsxsd/framework/,DanaInfo=202.195.206.35,Port=8080+xsMain.jsp' and \
+            result.url != 'https://vpn.just.edu.cn/jsxsd/grsz/,DanaInfo=202.195.206.35,Port=8080+grsz_xgmm_beg.do':
         raise AccountError('教务系统账号或密码不正确')
 
 
@@ -40,7 +40,7 @@ def get_score(session: requests.Session, kksj='', xsfs='MAX'):
     :param xsfs: 成绩显示方式
     :return:
     """
-    result = session.post('https://vpn.just.edu.cn/jsxsd/kscj/,DanaInfo=jwgl.just.edu.cn,Port=8080+cjcx_list',
+    result = session.post('https://vpn.just.edu.cn/jsxsd/kscj/,DanaInfo=202.195.206.35,Port=8080+cjcx_list',
                           data={'kksj': kksj, 'kcxz': '', 'kcmc': '', 'xsfs': xsfs})
     # print(result.text)
     return result.text
@@ -51,7 +51,7 @@ def get_score2(session: requests.Session, kksj=''):
     :param kksj: 开课时间
     :return:
     """
-    result = session.post('https://vpn.just.edu.cn/jsxsd/kscj/,DanaInfo=jwgl.just.edu.cn,Port=8080+cjtd_add_left',
+    result = session.post('https://vpn.just.edu.cn/jsxsd/kscj/,DanaInfo=202.195.206.35,Port=8080+cjtd_add_left',
                           data={'kch': '', 'xnxq01id': kksj})
     # print(result.text)
     return result.text
@@ -62,6 +62,6 @@ def get_course(session: requests.Session, kksj):
     :param kksj: 开课时间
     :return:
     """
-    result = session.post('https://vpn.just.edu.cn/jsxsd/xskb/,DanaInfo=jwgl.just.edu.cn,Port=8080+xskb_list.do',
+    result = session.post('https://vpn.just.edu.cn/jsxsd/xskb/,DanaInfo=202.195.206.35,Port=8080+xskb_list.do',
                           data={'xnxq01id': kksj})
     return result.text

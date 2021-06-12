@@ -61,42 +61,50 @@ def parse_course(html):
 
 
 def parse_score(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    trs = soup.find(id='dataList').find_all('tr')
     score_list = []
-    if len(trs) > 0:
-        trs = trs[1:]
-    for score in trs:
-        one_score_prop = []
-        one = score.find_all('td')
-        for prop in one:
-            one_score_prop.append(prop.text)
-        score_list.append({'no': one_score_prop[0], 'semester': one_score_prop[1], 'scoreNo': one_score_prop[2],
-                           'name': one_score_prop[3], 'score': one_score_prop[4], 'credit': one_score_prop[5],
-                           'period': one_score_prop[6], 'evaluationMode': one_score_prop[7],
-                           'courseProperty': one_score_prop[8], 'courseNature': one_score_prop[9],
-                           'alternativeCourseNumber': one_score_prop[10],
-                           'alternativeCourseName': one_score_prop[11],
-                           'scoreFlag': one_score_prop[12]})
+    try:
+        soup = BeautifulSoup(html, 'html.parser')
+        trs = soup.find(id='dataList').find_all('tr')
+        if len(trs) > 0:
+            trs = trs[1:]
+        for score in trs:
+            one_score_prop = []
+            one = score.find_all('td')
+            for prop in one:
+                one_score_prop.append(prop.text)
+            score_list.append({'no': one_score_prop[0], 'semester': one_score_prop[1], 'scoreNo': one_score_prop[2],
+                               'name': one_score_prop[3], 'score': one_score_prop[4], 'credit': one_score_prop[5],
+                               'period': one_score_prop[6], 'evaluationMode': one_score_prop[7],
+                               'courseProperty': one_score_prop[8], 'courseNature': one_score_prop[9],
+                               'alternativeCourseNumber': one_score_prop[10],
+                               'alternativeCourseName': one_score_prop[11],
+                               'scoreFlag': one_score_prop[12]})
+    except BaseException as e:
+        print(e)
+        raise Exception('没有解析到成绩或者未评教，可以使用成绩替代入口尝试查询')
     return score_list
 
 
 def parse_score2(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    trs = soup.find(id='dataList').find_all('tr')
     score_list = []
-    if len(trs) > 0:
-        trs = trs[1:]
-    for score in trs:
-        one_score_prop = []
-        one = score.find_all('td')[1:]
-        for prop in one:
-            one_score_prop.append(prop.text)
-        score_list.append({'no': one_score_prop[0], 'semester': one_score_prop[1], 'scoreNo': one_score_prop[2],
-                           'name': one_score_prop[3], 'score': one_score_prop[4], 'credit': one_score_prop[5],
-                           'period': None, 'evaluationMode': one_score_prop[6],
-                           'courseProperty': one_score_prop[7], 'courseNature': None,
-                           'alternativeCourseNumber': None,
-                           'alternativeCourseName': None,
-                           'scoreFlag': None})
+    try:
+        soup = BeautifulSoup(html, 'html.parser')
+        trs = soup.find(id='dataList').find_all('tr')
+        if len(trs) > 0:
+            trs = trs[1:]
+        for score in trs:
+            one_score_prop = []
+            one = score.find_all('td')[1:]
+            for prop in one:
+                one_score_prop.append(prop.text)
+            score_list.append({'no': one_score_prop[0], 'semester': one_score_prop[1], 'scoreNo': one_score_prop[2],
+                               'name': one_score_prop[3], 'score': one_score_prop[4], 'credit': one_score_prop[5],
+                               'period': None, 'evaluationMode': one_score_prop[6],
+                               'courseProperty': one_score_prop[7], 'courseNature': None,
+                               'alternativeCourseNumber': None,
+                               'alternativeCourseName': None,
+                               'scoreFlag': None})
+    except BaseException as e:
+        print(e)
+        raise Exception('没有解析到成绩')
     return score_list

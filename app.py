@@ -24,8 +24,6 @@ def hello_world():
 
 @app.route('/vpn/score')
 def get_score_by_vpn():
-    # with open(r'C:\Users\dreamfever\Desktop\score.json', encoding='utf8', mode='r') as f:
-    #     return jsonify({'code': 200, 'message': '成功', 'data': json.loads(f.read())})
     username = request.args['username']
     password = request.args['password']
     vpn_username = request.args['vpn_username']
@@ -36,20 +34,18 @@ def get_score_by_vpn():
     session = requests.Session()
     session.verify = False
     try:
-        vpn.vpn_login(session, vpn_username, vpn_password)
-        vpn.jw_login(session, username, password)
-        result = vpn.get_score(session, kksj, xsfs)
+        # vpn.vpn_login(session, vpn_username, vpn_password)
+        just.jw_login(session, username, password)
+        result = just.get_score(session, kksj, xsfs)
         return jsonify({'code': 200, 'message': None, 'data': parse_score(result)})
     except BaseException as e:
         return jsonify({'code': 400, 'message': e.__str__(), 'data': None})
     finally:
-        vpn.vpn_logout(session)
+        just.jw_logout(session)
 
 
 @app.route('/vpn/score2')
 def get_score2_by_vpn():
-    # with open(r'C:\Users\dreamfever\Desktop\score2.json', encoding='utf8', mode='r') as f:
-    #     return jsonify({'code': 200, 'message': '成功', 'data': json.loads(f.read())})
     username = request.args['username']
     password = request.args['password']
     vpn_username = request.args['vpn_username']
@@ -58,20 +54,18 @@ def get_score2_by_vpn():
     session = requests.Session()
     session.verify = False
     try:
-        vpn.vpn_login(session, vpn_username, vpn_password)
-        vpn.jw_login(session, username, password)
-        result = vpn.get_score2(session, kksj)
+        # vpn.vpn_login(session, vpn_username, vpn_password)
+        just.jw_login(session, username, password)
+        result = just.get_score2(session, kksj)
         return jsonify({'code': 200, 'message': None, 'data': parse_score2(result)})
     except BaseException as e:
         return jsonify({'code': 400, 'message': e.__str__(), 'data': None})
     finally:
-        vpn.vpn_logout(session)
+        just.jw_logout(session)
 
 
 @app.route('/vpn/course')
 def get_course_by_vpn():
-    # with open(r'C:\Users\dreamfever\Desktop\course.json', encoding='utf8', mode='r') as f:
-    #     return jsonify({'code': 200, 'message': '成功', 'data': json.loads(f.read())})
     username = request.args['username']
     password = request.args['password']
     vpn_username = request.args['vpn_username']
@@ -80,14 +74,14 @@ def get_course_by_vpn():
     session = requests.Session()
     session.verify = False
     try:
-        vpn.vpn_login(session, vpn_username, vpn_password)
-        vpn.jw_login(session, username, password)
-        result = vpn.get_course(session, kksj)
+        # vpn.vpn_login(session, vpn_username, vpn_password)
+        just.jw_login(session, username, password)
+        result = just.get_course(session, kksj)
         return jsonify({'code': 200, 'message': None, 'data': parse_course(result)})
     except BaseException as e:
         return jsonify({'code': 400, 'message': e.__str__(), 'data': None})
     finally:
-        vpn.vpn_logout(session)
+        just.jw_logout(session)
 
 
 @app.route('/just/score')
@@ -161,8 +155,6 @@ def get_course_by_vpn2():
 
 
 if __name__ == '__main__':
-    # server = WSGIServer(('0.0.0.0', 9008), app, keyfile='5070554_mdreamfever.com.key',
-    #                     certfile='5070554_mdreamfever.com.pem')
-    app.run()
-    # server = WSGIServer(('0.0.0.0', 8080), app)
-    # server.serve_forever()
+    server = WSGIServer(('0.0.0.0', 9008), app, keyfile='5070554_mdreamfever.com.key',
+                        certfile='5070554_mdreamfever.com.pem')
+    server.serve_forever()
